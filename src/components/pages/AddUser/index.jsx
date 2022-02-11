@@ -1,5 +1,6 @@
 import React from "react";
-import { Form } from "../Form";
+import { Form } from "../../Form";
+import { AllUsersBtn } from "../../AllUsersBtn";
 
 export function AddUser() {
   
@@ -7,11 +8,7 @@ export function AddUser() {
   
     <main id="site-main">
     <div className="container">
-        <div className="box-nav d-flex justify-between">
-            <div className="filter">
-                <a href="/"><i className="fas fa-angle-double-left"></i>All Users</a>
-            </div>
-        </div>
+       <AllUsersBtn />
         <div className="form-title text-center">
             <h2 className="text-dark">New User</h2>
             <span className="text-light">
