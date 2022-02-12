@@ -3,6 +3,9 @@ const bodyParser = require('body-parser');
 const app = express();
 const dotenv = require("dotenv");
 const morgan = require("morgan");
+const cors = require('cors')
+
+app.use(cors())
 
 const connectDB = require("./server/database/connection");
 

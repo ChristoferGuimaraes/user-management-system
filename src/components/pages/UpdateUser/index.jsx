@@ -1,5 +1,6 @@
 import React from "react";
 import { Form } from "../../Form";
+import { AllUsersBtn } from "../../AllUsersBtn";
 
 export function UpdateUser() {
   return (
@@ -7,9 +8,7 @@ export function UpdateUser() {
       <div className="container">
         <div className="box-nav d-flex justify-between">
           <div className="filter">
-            <a href="/">
-              <i className="fas fa-angle-double-left"></i>All Users
-            </a>
+            <AllUsersBtn />
           </div>
         </div>
         <div className="form-title text-center">

@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaUserEdit, FaUserMinus } from "react-icons/fa";
+import api from "../../../services/api";
 
 export function Users() {
+
+    useEffect(() => {
+      api.get("/").then(({ data }) => {
+        console.log(data)
+      });
+    }, []);
+
+
   return (
     <main id="site-main">
       <div className="container">

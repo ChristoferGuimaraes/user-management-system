@@ -1,4 +1,4 @@
-const axios = require("axios");
+const axios = require('axios')
 
 exports.homeRoutes = (req, res) => {
   //make a get request to /api/users

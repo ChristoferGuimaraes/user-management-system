@@ -1,9 +1,9 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import { Users } from "../Users";
-import { AddUser } from "../AddUser";
-import { UpdateUser } from "../UpdateUser";
+import { Users } from "../../components/pages/Users";
+import { AddUser } from "../../components/pages/AddUser";
+import { UpdateUser } from "../../components/pages/UpdateUser";
 
 export default function Paths() {
   return (
