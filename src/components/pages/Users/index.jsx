@@ -1,14 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaUserEdit, FaUserMinus } from "react-icons/fa";
 import api from "../../../services/api";
 
 export function Users() {
+  const [users, setUsers] = useState([]);
+  let userId = 1;
 
-    useEffect(() => {
-      api.get("/").then(({ data }) => {
-        console.log(data)
-      });
-    }, []);
+  useEffect(() => {
+    api.get("/").then(({ data }) => {
+      setUsers(data);
+    });
+  }, []);
+
+  function linkHandle(id) {
+    return `/update-user?id=${id}`;
+  }
 
 
   return (
@@ -35,25 +41,32 @@ export function Users() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>Christofer Guimarães</td>
-                <td>exemple@gmail.com</td>
-                <td>Male</td>
-                <td>Inactive</td>
-                <td>
-                  <a href="/update-user" className="btn border-shadow update">
-                    <span className="text-gradient">
-                      <FaUserEdit />
-                    </span>
-                  </a>
-                  <a className="btn border-shadow delete">
-                    <span className="text-gradient">
-                      <FaUserMinus />
-                    </span>
-                  </a>
-                </td>
-              </tr>
+              {users?.map((user) => {
+                return (
+                  <tr key={user._id}>
+                    <td>{userId++}</td>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>{user.gender}</td>
+                    <td>{user.status}</td>
+                    <td>
+                      <a
+                        href={linkHandle(user._id)}
+                        className="btn border-shadow update"
+                      >
+                        <span className="text-gradient">
+                          <FaUserEdit />
+                        </span>
+                      </a>
+                      <a className="btn border-shadow delete">
+                        <span className="text-gradient">
+                          <FaUserMinus />
+                        </span>
+                      </a>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </form>

@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { Users } from "../../components/pages/Users";
 import { AddUser } from "../../components/pages/AddUser";
 import { UpdateUser } from "../../components/pages/UpdateUser";
+import { NotFound } from "../../components/pages/NotFound";
 
 export default function Paths() {
   return (
@@ -11,7 +12,7 @@ export default function Paths() {
         <Route element={<Users />} path="/" />
         <Route element={<AddUser />} path="/add-user" />
         <Route element={<UpdateUser />} path="/update-user" />
-        <Route element={<h1>Not Found!</h1>} path="*" />
+        <Route element={<NotFound />} path="*" />
       </Routes>
   );
 }
