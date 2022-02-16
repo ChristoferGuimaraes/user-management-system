@@ -32,11 +32,11 @@ export function Users() {
     <main id="site-main">
       <div className="container">
         <div className="box-nav d-flex justify-between">
-          <a href="/add-user" className="border-shadow">
+          <Link to="/add-user" className="border-shadow">
             <span className="text-gradient">
               New User <i className="fas fa-user"></i>
             </span>
-          </a>
+          </Link>
         </div>
 
         <form action="/" method="POST">
@@ -70,11 +70,11 @@ export function Users() {
                           <FaUserEdit />
                         </span>
                       </Link>
-                      <a className="btn border-shadow delete">
+                      <Link to="#" className="btn border-shadow delete">
                         <span className="text-gradient">
                           <FaUserMinus />
                         </span>
-                      </a>
+                      </Link>
                     </td>
                   </tr>
                 );
@@ -83,7 +83,7 @@ export function Users() {
           </table>
         </form>
       </div>
-      <button onClick={() => console.log(userObj)}>Clique</button>
+      {/*<button onClick={() => console.log(userObj)}>Clique</button>*/}
     </main>
   );
 }

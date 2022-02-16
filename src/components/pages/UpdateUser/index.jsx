@@ -4,7 +4,7 @@ import { AllUsersBtn } from "../../AllUsersBtn";
 import { UserContext } from "../../../contexts/userContext";
 
 export function UpdateUser() {
-  const { userObj } = useContext(UserContext) 
+  const { userObj } = useContext(UserContext);
   return (
     <main id="site-main">
       <div className="container">
@@ -19,8 +19,15 @@ export function UpdateUser() {
             Use the below form to update an user
           </span>
         </div>
-        <Form id={"update_user"} method={"POST"} />
-        <button onClick={() => console.log(userObj)}>Clique</button>
+        <Form
+          id={"update_user"}
+          method={"POST"}
+          nameValue={userObj.name}
+          emailValue={userObj.email}
+          genderValue={userObj.gender}
+          statusValue={userObj.status}
+        />
+        {/*<button onClick={() => console.log(userObj)}>Clique</button>*/}
       </div>
     </main>
   );

@@ -1,10 +1,24 @@
 import React, { useState } from "react";
 
-export function Form({ method, action, id, nameForm }) {
+export function Form({
+  method,
+  action,
+  id,
+  nameValue,
+  emailValue,
+  genderValue,
+  statusValue,
+}) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
   const [status, setStatus] = useState("");
+  const obj = {
+    name: name,
+    email: email,
+    gender: gender,
+    status: status,
+  };
 
   function onGenderChanged(event) {
     return setGender(event.target.value);
@@ -16,13 +30,6 @@ export function Form({ method, action, id, nameForm }) {
 
   function submitForm(event) {
     event.preventDefault();
-
-    const obj = {
-      name: name,
-      email: email,
-      gender: gender,
-      status: status,
-    };
 
     console.log(obj);
   }
@@ -43,6 +50,7 @@ export function Form({ method, action, id, nameForm }) {
           <input
             type="text"
             name="name"
+            defaultValue={nameValue}
             onChange={(e) => setName(e.target.value)}
             placeholder="Name"
           />
@@ -54,9 +62,9 @@ export function Form({ method, action, id, nameForm }) {
           <input
             type="text"
             name="email"
+            defaultValue={emailValue}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="example@gmail.com"
-            onClick={nameForm}
           />
         </div>
         <div className="form-group" onChange={(e) => onGenderChanged(e)}>
@@ -64,13 +72,25 @@ export function Form({ method, action, id, nameForm }) {
             Gender
           </label>
           <div className="radio inline">
-            <input type="radio" id="radio" name="gender" value="Male" />
+            <input
+              type="radio"
+              id="radio"
+              name="gender"
+              value="Male"
+              defaultChecked={genderValue === "Male" ? true : false}
+            />
             <label htmlFor="radio" className="radio-label">
               Male
             </label>
           </div>
           <div className="radio inline">
-            <input type="radio" id="radio-2" name="gender" value="Female" />
+            <input
+              type="radio"
+              id="radio-2"
+              name="gender"
+              value="Female"
+              defaultChecked={genderValue === "Female" ? true : false}
+            />
             <label htmlFor="radio-2" className="radio-label">
               Female
             </label>
@@ -82,13 +102,25 @@ export function Form({ method, action, id, nameForm }) {
             Status
           </label>
           <div className="radio inline">
-            <input type="radio" id="radio-3" name="status" value="Active" />
+            <input
+              type="radio"
+              id="radio-3"
+              name="status"
+              value="Active"
+              defaultChecked={statusValue === "Active" ? true : false}
+            />
             <label htmlFor="radio-3" className="radio-label">
               Active
             </label>
           </div>
           <div className="radio inline">
-            <input type="radio" id="radio-4" name="status" value="Inactive" />
+            <input
+              type="radio"
+              id="radio-4"
+              name="status"
+              value="Inactive"
+              defaultChecked={statusValue === "Inactive" ? true : false}
+            />
             <label htmlFor="radio-4" className="radio-label">
               Inactive
             </label>
