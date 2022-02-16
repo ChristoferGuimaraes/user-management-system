@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export function Form({ method, action, id }) {
+export function Form({ method, action, id, nameForm }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
@@ -28,7 +28,12 @@ export function Form({ method, action, id }) {
   }
 
   return (
-    <form id={id} onSubmit={(e) => submitForm(e)} method={method} action={action}>
+    <form
+      id={id}
+      onSubmit={(e) => submitForm(e)}
+      method={method}
+      action={action}
+    >
       <div className="new_user">
         <div className="form-group">
           <label htmlFor="name" className="text-light">
@@ -51,6 +56,7 @@ export function Form({ method, action, id }) {
             name="email"
             onChange={(e) => setEmail(e.target.value)}
             placeholder="example@gmail.com"
+            onClick={nameForm}
           />
         </div>
         <div className="form-group" onChange={(e) => onGenderChanged(e)}>

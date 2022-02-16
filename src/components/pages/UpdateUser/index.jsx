@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Form } from "../../Form";
 import { AllUsersBtn } from "../../AllUsersBtn";
+import { UserContext } from "../../../contexts/userContext";
 
 export function UpdateUser() {
+  const { userObj } = useContext(UserContext) 
   return (
     <main id="site-main">
       <div className="container">
@@ -18,6 +20,7 @@ export function UpdateUser() {
           </span>
         </div>
         <Form id={"update_user"} method={"POST"} />
+        <button onClick={() => console.log(userObj)}>Clique</button>
       </div>
     </main>
   );

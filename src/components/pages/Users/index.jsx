@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { Link } from 'react-router-dom'
+import { UserContext } from "../../../contexts/userContext";
 import { FaUserEdit, FaUserMinus } from "react-icons/fa";
 import api from "../../../services/api";
 
 export function Users() {
   const [users, setUsers] = useState([]);
+  const { userObj, setUserObj } = useContext(UserContext);
   let userId = 1;
 
   useEffect(() => {
@@ -16,6 +19,14 @@ export function Users() {
     return `/update-user?id=${id}`;
   }
 
+  function getUser(user) {
+    return setUserObj({
+      name: user.name,
+      email: user.email,
+      gender: user.gender,
+      status: user.status,
+    });
+  }
 
   return (
     <main id="site-main">
@@ -50,14 +61,15 @@ export function Users() {
                     <td>{user.gender}</td>
                     <td>{user.status}</td>
                     <td>
-                      <a
-                        href={linkHandle(user._id)}
+                      <Link
+                        onClick={() => getUser(user)}
+                        to={linkHandle(user._id)}
                         className="btn border-shadow update"
                       >
                         <span className="text-gradient">
                           <FaUserEdit />
                         </span>
-                      </a>
+                      </Link>
                       <a className="btn border-shadow delete">
                         <span className="text-gradient">
                           <FaUserMinus />
@@ -71,6 +83,7 @@ export function Users() {
           </table>
         </form>
       </div>
+      <button onClick={() => console.log(userObj)}>Clique</button>
     </main>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import { Users } from "../../components/pages/Users";
@@ -8,11 +8,11 @@ import { NotFound } from "../../components/pages/NotFound";
 
 export default function Paths() {
   return (
-      <Routes>
-        <Route element={<Users />} path="/" />
-        <Route element={<AddUser />} path="/add-user" />
-        <Route element={<UpdateUser />} path="/update-user" />
-        <Route element={<NotFound />} path="*" />
-      </Routes>
+    <Routes>
+      <Route element={<Users />} path="/" />
+      <Route element={<UpdateUser />} path="/update-user" />
+      <Route element={<AddUser />} path="/add-user" />
+      <Route element={<NotFound />} path="*" />
+    </Routes>
   );
 }
