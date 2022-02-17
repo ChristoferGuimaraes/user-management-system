@@ -6,7 +6,7 @@ import api from "../../../services/api";
 
 export function Users() {
   const [users, setUsers] = useState([]);
-  const { userObj, setUserObj } = useContext(UserContext);
+  const { setUserObj } = useContext(UserContext);
   let userId = 1;
 
   useEffect(() => {
@@ -21,6 +21,7 @@ export function Users() {
 
   function getUser(user) {
     return setUserObj({
+      id: user._id,
       name: user.name,
       email: user.email,
       gender: user.gender,

@@ -1,5 +1,5 @@
 import React from "react";
-import { Form } from "../../Form";
+import { AddForm } from "../../Forms/AddForm/index";
 import { AllUsersBtn } from "../../AllUsersBtn";
 
 export function AddUser() {
@@ -15,7 +15,7 @@ export function AddUser() {
                 Use the below form to create a new account
             </span>
         </div>
-      <Form id={"add_user"} method="POST" action={"/api/users"}/>
+      <AddForm id={"add_user"} method="POST" action={"/api/users"}/>
     </div>
 </main>
   )

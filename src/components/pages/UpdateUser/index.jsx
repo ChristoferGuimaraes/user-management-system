@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
-import { Form } from "../../Form";
+import { UpdateForm } from "../../Forms/UpdateForm";
 import { AllUsersBtn } from "../../AllUsersBtn";
 import { UserContext } from "../../../contexts/userContext";
+
 
 export function UpdateUser() {
   const { userObj } = useContext(UserContext);
@@ -19,15 +20,16 @@ export function UpdateUser() {
             Use the below form to update an user
           </span>
         </div>
-        <Form
+        <UpdateForm
           id={"update_user"}
           method={"POST"}
+          action={"/api/users"}
           nameValue={userObj.name}
           emailValue={userObj.email}
           genderValue={userObj.gender}
           statusValue={userObj.status}
         />
-        {/*<button onClick={() => console.log(userObj)}>Clique</button>*/}
+        /*<button onClick={() => console.log(userObj.id)}>Clique</button>*/
       </div>
     </main>
   );
