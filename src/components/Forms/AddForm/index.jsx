@@ -1,20 +1,27 @@
 import React, { useState } from "react";
+import api from "../../../services/api";
 
-export function AddForm({
-  method,
-  action,
-  id,
-}) {
+export function AddForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
   const [status, setStatus] = useState("");
-  const obj = {
+  const submitedUser = {
     name: name,
     email: email,
     gender: gender,
     status: status,
   };
+
+  async function postUser() {
+    await api
+      .post("/", submitedUser)
+      .then((res) => console.log(res.data))
+      .catch((error) => {
+        window.alert(error);
+        console.log(error);
+      });
+  }
 
   function onGenderChanged(event) {
     return setGender(event.target.value);
@@ -27,15 +34,13 @@ export function AddForm({
   function submitForm(event) {
     event.preventDefault();
 
-    console.log(obj);
+    postUser();
   }
 
   return (
     <form
-      id={id}
+      id="add_user"
       onSubmit={(e) => submitForm(e)}
-      method={method}
-      action={action}
     >
       <div className="new_user">
         <div className="form-group">

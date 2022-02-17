@@ -21,15 +21,12 @@ export function UpdateUser() {
           </span>
         </div>
         <UpdateForm
-          id={"update_user"}
-          method={"POST"}
-          action={"/api/users"}
+
           nameValue={userObj.name}
           emailValue={userObj.email}
           genderValue={userObj.gender}
           statusValue={userObj.status}
         />
-        /*<button onClick={() => console.log(userObj.id)}>Clique</button>*/
       </div>
     </main>
   );
