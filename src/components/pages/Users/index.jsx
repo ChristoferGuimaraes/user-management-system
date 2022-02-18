@@ -84,7 +84,6 @@ export function Users() {
           </table>
         </form>
       </div>
-      {/*<button onClick={() => console.log(userObj)}>Clique</button>*/}
     </main>
   );
 }

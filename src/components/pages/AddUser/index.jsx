@@ -15,7 +15,7 @@ export function AddUser() {
                 Use the below form to create a new account
             </span>
         </div>
-      <AddForm id={"add_user"} method="POST" action={"/api/users"}/>
+      <AddForm />
     </div>
 </main>
   )

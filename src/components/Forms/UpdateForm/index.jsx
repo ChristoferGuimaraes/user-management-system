@@ -2,20 +2,21 @@ import React, { useState, useContext } from "react";
 import { UserContext } from "../../../contexts/userContext";
 import api from "../../../services/api";
 
-export function UpdateForm({ method, action, id }) {
+export function UpdateForm() {
   const { userObj } = useContext(UserContext);
   const [name, setName] = useState(userObj.name);
   const [email, setEmail] = useState(userObj.email);
   const [gender, setGender] = useState(userObj.gender);
   const [status, setStatus] = useState(userObj.status);
-  const submitedUser = {
-    name: name,
-    email: email,
-    gender: gender,
-    status: status,
-  };
 
   async function updateUserValue() {
+    const submitedUser = {
+      name: name,
+      email: email,
+      gender: gender,
+      status: status,
+    };
+
     await api
       .put(`/${userObj.id}`, submitedUser)
       .then((res) => window.alert(`${res.data.name} was updated succefully!`))
@@ -39,7 +40,7 @@ export function UpdateForm({ method, action, id }) {
   }
 
   return (
-    <form id={id} onSubmit={submitForm} method={method} action={action}>
+    <form id="update_user" onSubmit={submitForm}>
       <div className="new_user">
         <div className="form-group">
           <label htmlFor="name" className="text-light">
