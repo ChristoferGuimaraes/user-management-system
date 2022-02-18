@@ -71,7 +71,7 @@ export function Users() {
                           <FaUserEdit />
                         </span>
                       </Link>
-                      <Link to="#" className="btn border-shadow delete">
+                      <Link to={linkHandle(user._id)} className="btn border-shadow delete">
                         <span className="text-gradient">
                           <FaUserMinus />
                         </span>
