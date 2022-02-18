@@ -6,14 +6,15 @@ export function AddForm() {
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
   const [status, setStatus] = useState("");
-  const submitedUser = {
-    name: name,
-    email: email,
-    gender: gender,
-    status: status,
-  };
 
   async function postUser() {
+    const submitedUser = {
+      name: name,
+      email: email,
+      gender: gender,
+      status: status,
+    };
+
     await api
       .post("/", submitedUser)
       .then((res) => console.log(res.data))
@@ -33,15 +34,15 @@ export function AddForm() {
 
   function submitForm(event) {
     event.preventDefault();
-
     postUser();
   }
 
+  function onBtnClicked() {
+    return (window.location.href = "/");
+  }
+
   return (
-    <form
-      id="add_user"
-      onSubmit={(e) => submitForm(e)}
-    >
+    <form id="add_user" onSubmit={(e) => submitForm(e)}>
       <div className="new_user">
         <div className="form-group">
           <label htmlFor="name" className="text-light">
@@ -103,7 +104,11 @@ export function AddForm() {
         </div>
 
         <div className="form-group">
-          <button type="submit" className="btn text-dark update">
+          <button
+            type="submit"
+            className="btn text-dark update"
+            onClick={() => onBtnClicked()}
+          >
             Save
           </button>
         </div>

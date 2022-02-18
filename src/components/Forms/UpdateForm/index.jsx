@@ -131,7 +131,6 @@ export function UpdateForm() {
           <button
             type="submit"
             className="btn text-dark update"
-            onSubmit={(e) => submitForm(e)}
           >
             Save
           </button>
