@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 import { UserContext } from "../../../contexts/userContext";
 import { FaUserEdit, FaUserMinus } from "react-icons/fa";
 import api from "../../../services/api";
@@ -14,6 +14,25 @@ export function Users() {
       setUsers(data);
     });
   }, []);
+
+  function getAllUsers() {
+    api.get("/").then(({ data }) => {
+      setUsers(data);
+    });
+  }
+
+  async function deleteUser(id) {
+    if (window.confirm("Are you sure?")) {
+      await api
+        .delete(`/${id}`)
+        .then((res) => window.alert("User was deleted succefully!"))
+        .catch((error) => {
+          window.alert(error);
+          console.log(error);
+        });
+      getAllUsers();
+    }
+  }
 
   function linkHandle(id) {
     return `/update-user?id=${id}`;
@@ -71,7 +90,11 @@ export function Users() {
                           <FaUserEdit />
                         </span>
                       </Link>
-                      <Link to="#" className="btn border-shadow delete">
+                      <Link
+                        to={"/"}
+                        className="btn border-shadow delete"
+                        onClick={() => deleteUser(user._id)}
+                      >
                         <span className="text-gradient">
                           <FaUserMinus />
                         </span>
