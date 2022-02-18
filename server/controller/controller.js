@@ -20,7 +20,7 @@ exports.create = (req, res) => {
   user
     .save(user)
     .then((data) => {
-
+      res.send(data)
     })
     .catch((err) => {
       res.status(500).send({
@@ -28,7 +28,7 @@ exports.create = (req, res) => {
           err.message || "Some Error occured while creating a create operation",
       });
     });
-};
+};  
 
 //retrieve and return all users / retrive and return a single user
 exports.find = (req, res) => {
