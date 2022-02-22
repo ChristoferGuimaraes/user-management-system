@@ -10,8 +10,8 @@ function App() {
   const [userObj, setUserObj] = useState({});
   return (
     <>
-      <Header />
       <Router>
+        <Header />
         <UserContext.Provider value={{ userObj, setUserObj }}>
           <Routes />
         </UserContext.Provider>

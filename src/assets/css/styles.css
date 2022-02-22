@@ -26,6 +26,7 @@ a {
 .nav-brand {
   font-size: 1.5em;
   font-weight: bold;
+  color: #fff;
 }
 
 .d-flex {
@@ -66,9 +67,10 @@ a {
 }
 
 #header nav {
-  background-color: #06d6a0;
+  background-color: #8e2de2;
   padding: 1em 0;
   width: 100%;
+  color: #fff;
 }
 
 #site-main {
@@ -105,7 +107,8 @@ table th {
 }
 
 .table tr:hover {
-  background-color: #06d6a0;
+  background-color: #8e2de2;
+  color: #fff;
 }
 
 .table tr:hover td > a {
@@ -147,7 +150,6 @@ table th {
   .container {
     margin: 10px;
   }
-  
 }
 
 /* add user & update user template */
@@ -210,13 +212,13 @@ table th {
 }
 
 .radio input[type="radio"]:checked + .radio-label:before {
-  background-color: #16db93;
+  background-color: #8e2de2;
   box-shadow: inset 0 0 0 4px #e9ecef;
 }
 
 .radio input[type="radio"]:focus + .radio-label:before {
   outline: none;
-  border-color: #16db93;
+  border-color: #8e2de2;
 }
 
 .radio input[type="radio"]:disabled + .radio-label:before {
@@ -229,23 +231,43 @@ table th {
 #add_user .form-group .btn {
   width: 100%;
   padding: 0.9em 1em;
-  background-color: #16db93;
+  background-color: #8e2de2;
   border: none;
   font-family: "PT Sans", sans-serif;
   font-size: 1em;
   cursor: pointer;
   border-radius: 0.2em;
   margin: 0.5em 0;
+  font-weight: bold;
+  color: #fff;
 }
 
 #update_user .form-group .btn:hover,
 #add_user .form-group .btn:hover {
   background-color: var(--dark);
-  color: var(--border);
 }
 
-.update:hover, .delete:hover {
+.update:hover,
+.delete:hover {
   cursor: pointer;
   transition: 0.3s;
   background-color: rgba(255, 255, 255, 0.473);
+}
+
+.error-message {
+  color: red;
+  margin-left: 10px;
+  background-color: rgba(255, 0, 0, 0.164);
+  padding: 3px;
+  padding: 4px 8px;
+  font-weight: bold;
+  border-radius: 3px;
+}
+
+.error-icon {
+  vertical-align: text-bottom;
+  margin-right: 5px;
+}
+
+.name-input {
 }

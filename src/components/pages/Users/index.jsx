@@ -1,18 +1,17 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../../contexts/userContext";
-import { FaUserEdit, FaUserMinus } from "react-icons/fa";
+import { FaUserEdit, FaUserMinus, FaUserAlt } from "react-icons/fa";
 import api from "../../../services/api";
 
 export function Users() {
   const [users, setUsers] = useState([]);
   const { setUserObj } = useContext(UserContext);
+  const [searchValue, setSearchValue] = useState("");
   let userId = 1;
 
   useEffect(() => {
-    api.get("/").then(({ data }) => {
-      setUsers(data);
-    });
+    getAllUsers();
   }, []);
 
   function getAllUsers() {
@@ -52,11 +51,15 @@ export function Users() {
     <main id="site-main">
       <div className="container">
         <div className="box-nav d-flex justify-between">
-          <Link to="/add-user" className="border-shadow">
+          <Link id="link-tag" to="/add-user" className="border-shadow">
             <span className="text-gradient">
-              New User <i className="fas fa-user"></i>
+              New User <FaUserAlt />
             </span>
           </Link>
+          <input
+            type="text"
+            onChange={(e) => setSearchValue(e.target.value)}
+          ></input>
         </div>
 
         <form action="/" method="POST">
@@ -72,37 +75,47 @@ export function Users() {
               </tr>
             </thead>
             <tbody>
-              {users?.map((user) => {
-                return (
-                  <tr key={user._id}>
-                    <td>{userId++}</td>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.gender}</td>
-                    <td>{user.status}</td>
-                    <td>
-                      <Link
-                        onClick={() => getUser(user)}
-                        to={linkHandle(user._id)}
-                        className="btn border-shadow update"
-                      >
-                        <span className="text-gradient">
-                          <FaUserEdit />
-                        </span>
-                      </Link>
-                      <Link
-                        to={"/"}
-                        className="btn border-shadow delete"
-                        onClick={() => deleteUser(user._id)}
-                      >
-                        <span className="text-gradient">
-                          <FaUserMinus />
-                        </span>
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })}
+              {users
+                ?.filter((user) => {
+                  return searchValue !== ""
+                    ? user.name
+                        .toLowerCase()
+                        .includes(searchValue.toLowerCase())
+                    : user;
+                })
+                .map((user) => {
+                  return (
+                    <tr key={user._id}>
+                      <td>{userId++}</td>
+                      <td>{user.name}</td>
+                      <td>{user.email}</td>
+                      <td>{user.gender}</td>
+                      <td>{user.status}</td>
+                      <td>
+                        <Link
+                          id="link-tag"
+                          to={linkHandle(user._id)}
+                          onClick={() => getUser(user)}
+                          className="btn border-shadow update"
+                        >
+                          <span className="text-gradient">
+                            <FaUserEdit />
+                          </span>
+                        </Link>
+                        <Link
+                          id="link-tag"
+                          to={"/"}
+                          className="btn border-shadow delete"
+                          onClick={() => deleteUser(user._id)}
+                        >
+                          <span className="text-gradient">
+                            <FaUserMinus />
+                          </span>
+                        </Link>
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </form>
