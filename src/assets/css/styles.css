@@ -113,6 +113,7 @@ table th {
 
 .table tr:hover td > a {
   box-shadow: none;
+  color: #fff;
 }
 
 .table .thead-dark th {
@@ -121,7 +122,7 @@ table th {
   border-color: #32383e;
 }
 
-@media only screen and (max-width: 720px) {
+@media (max-width: 720px) {
   table,
   thead,
   tbody,
@@ -247,13 +248,6 @@ table th {
   background-color: var(--dark);
 }
 
-.update:hover,
-.delete:hover {
-  cursor: pointer;
-  transition: 0.3s;
-  background-color: rgba(255, 255, 255, 0.473);
-}
-
 .error-message {
   color: red;
   margin-left: 10px;
@@ -267,7 +261,11 @@ table th {
 .error-icon {
   vertical-align: text-bottom;
   margin-right: 5px;
+  font-size: 18px;
 }
 
-.name-input {
+@media (max-width: 600px) {
+  .error-message {
+    display: inline-block;
+  }
 }
