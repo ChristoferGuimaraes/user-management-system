@@ -47,8 +47,8 @@ export function AddForm() {
           .string()
           .email("Enter a valid email adress")
           .required("Email is required"),
-        gender: yup.string().required("O sexo é obrigatório"),
-        status: yup.string().required("O status é obrigatório"),
+        gender: yup.string().required("Gender is required"),
+        status: yup.string().required("Status is required"),
       });
 
       await schema.validate(submitedUser, {
@@ -57,6 +57,7 @@ export function AddForm() {
 
       postUser();
       onBtnClicked();
+    
     } catch (err) {
       if (err instanceof yup.ValidationError) {
         const errorMessages = {};
@@ -89,7 +90,7 @@ export function AddForm() {
       <form id="add_user" onSubmit={(e) => submitForm(e)}>
         <div className="new_user">
           <div className="form-group">
-            <label htmlFor="name" className="text-light name-input">
+            <label htmlFor="name" className="text-light ">
               Name {showErrorMessage(errors.name)}
             </label>
             <input type="hidden" name="id" />
@@ -101,7 +102,7 @@ export function AddForm() {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="email" className="text-light name-input">
+            <label htmlFor="email" className="text-light ">
               Email {showErrorMessage(errors.email)}
             </label>
             <input
@@ -127,8 +128,8 @@ export function AddForm() {
               htmlFor={"radio-2"}
               name={"gender"}
               value={"Female"}
-              nameLabel={"Female"}
-            />
+              nameLabel={"Female"} 
+            /> {showErrorMessage(errors.gender)}
           </div>
           <div className="form-group" onChange={(e) => onStatusChanged(e)}>
             <label htmlFor="status" className="text-light">
@@ -147,7 +148,7 @@ export function AddForm() {
               name={"status"}
               value={"Inactive"}
               nameLabel={"Inactive"}
-            />
+            /> {showErrorMessage(errors.status)}
           </div>
           <div className="form-group">
             <button type="submit" className="btn text-dark update">
