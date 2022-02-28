@@ -1,6 +1,10 @@
 import React, { useState, useContext } from "react";
 import { UserContext } from "../../../contexts/userContext";
 import api from "../../../services/api";
+import { GoAlert } from "react-icons/go";
+import { RadioBtn } from "../RadioBtn";
+import * as yup from "yup";
+import { AllUsersContext } from "../../../contexts/AllUsersContext";
 
 export function UpdateForm() {
   const { userObj } = useContext(UserContext);
@@ -8,27 +12,66 @@ export function UpdateForm() {
   const [email, setEmail] = useState(userObj.email);
   const [gender, setGender] = useState(userObj.gender);
   const [status, setStatus] = useState(userObj.status);
+  const [errors, setErrors] = useState("");
+  const submitedUser = {
+    name: name,
+    email: email,
+    gender: gender,
+    status: status,
+  };
 
   async function updateUserValue() {
-    const submitedUser = {
-      name: name,
-      email: email,
-      gender: gender,
-      status: status,
-    };
-
     await api
       .put(`/${userObj.id}`, submitedUser)
-      .then((res) => window.alert(`${res.data.name} was updated succefully!`))
+      .then((res) => {
+        window.alert(`${res.data.name} was updated succefully!`);
+        setErrors("");
+      })
       .catch((error) => {
-        window.alert(error);
-        console.log(error);
+        if (error.response) {
+          const errorMsg = JSON.parse(error.request.response);
+          window.alert(errorMsg.message);
+        } else if (error.request) {
+          window.alert(error.request.response.message);
+          console.log(error.request.response);
+          console.log(error.request);
+        } else {
+          console.log("Error", error.message);
+        }
       });
   }
 
-  function submitForm(event) {
+  async function submitForm(event) {
     event.preventDefault();
-    updateUserValue();
+    try {
+      let schema = yup.object().shape({
+        name: yup
+          .string()
+          .min(3, "At least 3 characteres")
+          .required("Name is required"),
+        email: yup
+          .string()
+          .email("Enter a valid email adress")
+          .required("Email is required"),
+        gender: yup.string().required("Gender is required"),
+        status: yup.string().required("Status is required"),
+      });
+
+      await schema.validate(submitedUser, {
+        abortEarly: false,
+      });
+
+      updateUserValue();
+    } catch (err) {
+      if (err instanceof yup.ValidationError) {
+        const errorMessages = {};
+
+        err.inner.forEach((error) => {
+          errorMessages[error.path] = error.message;
+        });
+        setErrors(errorMessages);
+      }
+    }
   }
 
   function onGenderChanged(event) {
@@ -39,12 +82,22 @@ export function UpdateForm() {
     return setStatus(event.target.value);
   }
 
+  function showErrorMessage(error) {
+    if (error !== undefined) {
+      return (
+        <span className="error-message">
+          <GoAlert className="error-icon" /> {error}
+        </span>
+      );
+    }
+  }
+
   return (
     <form id="update_user" onSubmit={submitForm}>
       <div className="new_user">
         <div className="form-group">
           <label htmlFor="name" className="text-light">
-            Name
+            Name {showErrorMessage(errors.name)}
           </label>
           <input type="hidden" name="id" />
           <input
@@ -57,7 +110,7 @@ export function UpdateForm() {
         </div>
         <div className="form-group">
           <label htmlFor="email" className="text-light">
-            Email
+            Email {showErrorMessage(errors.email)}
           </label>
           <input
             type="text"
@@ -71,67 +124,50 @@ export function UpdateForm() {
           <label htmlFor="gender" className="text-light">
             Gender
           </label>
-          <div className="radio inline">
-            <input
-              type="radio"
-              id="radio"
-              name="gender"
-              value="Male"
-              defaultChecked={userObj.gender === "Male" ? true : false}
-            />
-            <label htmlFor="radio" className="radio-label">
-              Male
-            </label>
-          </div>
-          <div className="radio inline">
-            <input
-              type="radio"
-              id="radio-2"
-              name="gender"
-              value="Female"
-              defaultChecked={userObj.gender === "Female" ? true : false}
-            />
-            <label htmlFor="radio-2" className="radio-label">
-              Female
-            </label>
-          </div>
+          <RadioBtn
+            id={"radio"}
+            htmlFor={"radio"}
+            name={"gender"}
+            value={"Male"}
+            nameLabel={"Male"}
+            defaultChecked={userObj.gender === "Male" ? true : false}
+          />
+          <RadioBtn
+            id={"radio-2"}
+            htmlFor={"radio-2"}
+            name={"gender"}
+            value={"Female"}
+            nameLabel={"Female"}
+            defaultChecked={userObj.gender === "Female" ? true : false}
+          />{" "}
+          {showErrorMessage(errors.gender)}
         </div>
 
         <div className="form-group" onChange={(e) => onStatusChanged(e)}>
           <label htmlFor="status" className="text-light">
             Status
           </label>
-          <div className="radio inline">
-            <input
-              type="radio"
-              id="radio-3"
-              name="status"
-              value="Active"
-              defaultChecked={userObj.status === "Active" ? true : false}
-            />
-            <label htmlFor="radio-3" className="radio-label">
-              Active
-            </label>
-          </div>
-          <div className="radio inline">
-            <input
-              type="radio"
-              id="radio-4"
-              name="status"
-              value="Inactive"
-              defaultChecked={userObj.status === "Inactive" ? true : false}
-            />
-            <label htmlFor="radio-4" className="radio-label">
-              Inactive
-            </label>
-          </div>
+          <RadioBtn
+            id={"radio-3"}
+            htmlFor={"radio-3"}
+            name={"status"}
+            value={"Active"}
+            nameLabel={"Active"}
+            defaultChecked={userObj.status === "Active" ? true : false}
+          />
+          <RadioBtn
+            id={"radio-4"}
+            htmlFor={"radio-4"}
+            name={"status"}
+            value={"Inactive"}
+            nameLabel={"Inactive"}
+            defaultChecked={userObj.status === "Inactive" ? true : false}
+          />{" "}
+          {showErrorMessage(errors.status)}
         </div>
 
         <div className="form-group">
-          <button
-            type="submit"
-            className="btn text-dark update"
-          >
+          <button type="submit" className="btn text-dark update">
             Save
           </button>
         </div>
