@@ -7,7 +7,6 @@ import * as yup from "yup";
 import { AllUsersContext } from "../../../contexts/AllUsersContext";
 
 export function UpdateForm() {
-  const { users } = useContext(AllUsersContext);
   const { userObj } = useContext(UserContext);
   const [name, setName] = useState(userObj.name);
   const [email, setEmail] = useState(userObj.email);
@@ -71,7 +70,6 @@ export function UpdateForm() {
           errorMessages[error.path] = error.message;
         });
         setErrors(errorMessages);
-        console.log(errorMessages);
       }
     }
   }
@@ -92,12 +90,6 @@ export function UpdateForm() {
         </span>
       );
     }
-  }
-
-  function validateEmail() {
-    users.map((user) => {
-      user.email === userObj.email ? "This email was already taken" : "";
-    });
   }
 
   return (

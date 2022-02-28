@@ -60,6 +60,8 @@ export function Users() {
           </Link>
           <input
             type="text"
+            className="search-input"
+            placeholder="Serch..."
             onChange={(e) => setSearchValue(e.target.value)}
           ></input>
         </div>

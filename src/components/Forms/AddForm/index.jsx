@@ -23,6 +23,7 @@ export function AddForm() {
       .then((res) => {
         res.data;
         setErrors("");
+        window.alert("User added succefully!")
       })
       .catch((error) => {
         if (error.response) {
@@ -31,7 +32,6 @@ export function AddForm() {
         } else if (error.request) {
           window.alert(error.request.response.message);
           console.log(error.request.response);
-          console.log(error.request);
         } else {
           console.log("Error", error.message);
         }
