@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import api from "../../../services/api";
 import { RadioBtn } from "../RadioBtn";
 import { GoAlert } from "react-icons/go";
-import * as yup from "Yup";
+import * as yup from "yup";
 
 export function AddForm() {
   const [name, setName] = useState("");
@@ -20,10 +20,21 @@ export function AddForm() {
   async function postUser() {
     await api
       .post("/", submitedUser)
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        res.data;
+        setErrors("");
+      })
       .catch((error) => {
-        window.alert(error);
-        console.log(error);
+        if (error.response) {
+          const errorMsg = JSON.parse(error.request.response)
+          window.alert(errorMsg.message);
+        } else if (error.request) {
+          window.alert(error.request.response.message);
+          console.log(error.request.response);
+          console.log(error.request);
+        } else {
+          console.log("Error", error.message);
+        }
       });
   }
 
@@ -56,8 +67,7 @@ export function AddForm() {
       });
 
       postUser();
-      onBtnClicked();
-    
+      //onBtnClicked();
     } catch (err) {
       if (err instanceof yup.ValidationError) {
         const errorMessages = {};
@@ -66,20 +76,19 @@ export function AddForm() {
           errorMessages[error.path] = error.message;
         });
         setErrors(errorMessages);
-        console.log(errorMessages);
       }
     }
   }
 
-  function onBtnClicked() {
-    return (window.location.href = "/");
-  }
+  //function onBtnClicked() {
+  //  return (window.location.href = "/");
+  //}
 
   function showErrorMessage(error) {
     if (error !== undefined) {
       return (
         <span className="error-message">
-          <GoAlert className="error-icon"/> {error}
+          <GoAlert className="error-icon" /> {error}
         </span>
       );
     }
@@ -128,8 +137,9 @@ export function AddForm() {
               htmlFor={"radio-2"}
               name={"gender"}
               value={"Female"}
-              nameLabel={"Female"} 
-            /> {showErrorMessage(errors.gender)}
+              nameLabel={"Female"}
+            />{" "}
+            {showErrorMessage(errors.gender)}
           </div>
           <div className="form-group" onChange={(e) => onStatusChanged(e)}>
             <label htmlFor="status" className="text-light">
@@ -148,7 +158,8 @@ export function AddForm() {
               name={"status"}
               value={"Inactive"}
               nameLabel={"Inactive"}
-            /> {showErrorMessage(errors.status)}
+            />{" "}
+            {showErrorMessage(errors.status)}
           </div>
           <div className="form-group">
             <button type="submit" className="btn text-dark update">

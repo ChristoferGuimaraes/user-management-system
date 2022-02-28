@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../../contexts/userContext";
+import { AllUsersContext } from "../../../contexts/AllUsersContext";
 import { FaUserEdit, FaUserMinus, FaUserAlt } from "react-icons/fa";
 import api from "../../../services/api";
 
+
 export function Users() {
-  const [users, setUsers] = useState([]);
+  const  { users, setUsers }  = useContext(AllUsersContext);
   const { setUserObj } = useContext(UserContext);
   const [searchValue, setSearchValue] = useState("");
   let userId = 1;
