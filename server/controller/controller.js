@@ -10,11 +10,11 @@ exports.create = (req, res) => {
 
   Userdb.findOne({ email: req.body.email }, (err, userWithSameEmail) => {
     if (err) {
-      return res.status(400).json({
+      return res.status(400).send({
         message: "Error getting email try gain",
       });
     } else if (userWithSameEmail) {
-      return res.status(400).json({ message: "This email is already taken" });
+      return res.status(400).send({ message: "This email is already taken" });
     } else {
       //new user
       const user = new Userdb({
@@ -102,7 +102,19 @@ exports.update = (req, res) => {
       }
     })
     .catch((err) => {
-      res.status(500).send({ message: "Error update user information" });
+      Userdb.findOne({ email: req.body.email }, (err, userWithSameEmail) => {
+        if (err) {
+          return res.status(400).send({
+            message: "Error getting email try gain",
+          });
+        } else if (userWithSameEmail) {
+          return res
+            .status(400)
+            .send({ message: "This email is already taken" });
+        } else {
+          res.status(500).send({ message: "Error update user information" });
+        }
+      });
     });
 };
 
