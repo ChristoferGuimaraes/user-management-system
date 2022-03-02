@@ -4,7 +4,6 @@ import api from "../../../services/api";
 import { GoAlert } from "react-icons/go";
 import { RadioBtn } from "../RadioBtn";
 import * as yup from "yup";
-import { AllUsersContext } from "../../../contexts/AllUsersContext";
 
 export function UpdateForm() {
   const { userObj } = useContext(UserContext);
@@ -24,7 +23,7 @@ export function UpdateForm() {
     await api
       .put(`/${userObj.id}`, submitedUser)
       .then((res) => {
-        window.alert(`${res.data.name} was updated succefully!`);
+        window.alert(`${name} was updated succefully!`);
         setErrors("");
       })
       .catch((error) => {
@@ -34,7 +33,6 @@ export function UpdateForm() {
         } else if (error.request) {
           window.alert(error.request.response.message);
           console.log(error.request.response);
-          console.log(error.request);
         } else {
           console.log("Error", error.message);
         }
