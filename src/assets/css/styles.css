@@ -13,9 +13,22 @@
   box-sizing: border-box;
 }
 
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 a {
   text-decoration: none;
   font-family: "PT Sans", sans-serif;
+}
+
+a,
+a:visited,
+a:hover,
+a:active {
+  color: inherit;
 }
 
 .container {
@@ -76,6 +89,7 @@ a {
 #site-main {
   margin-top: 6em;
   font-family: "Barlow", sans-serif;
+  padding-bottom: 60px;
 }
 
 #site-main .container .box-nav > a {
@@ -85,6 +99,25 @@ a {
 
 #site-main .container form {
   margin: 2em 0;
+}
+
+.new-user-icon {
+  margin-right: 7px;
+}
+
+.search-icon {
+  padding: 8px;
+}
+
+.search-input {
+  border: none;
+  padding: 11px 0px;
+  outline: none;
+}
+
+.icon-styles {
+  vertical-align: middle;
+  color: #8e2de2;
 }
 
 table {
@@ -262,6 +295,57 @@ table th {
   vertical-align: text-bottom;
   margin-right: 5px;
   font-size: 18px;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--dark);
+  padding: 15px 0px;
+  align-items: center;
+  font-family: "PT Sans", sans-serif;
+}
+
+ul {
+  list-style-type: none;
+}
+
+footer ul {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+footer ul li {
+  margin-right: 10px;
+}
+
+footer ul li:last-child {
+  margin-right: 0;
+}
+
+footer ul li a {
+  color: #fff;
+}
+
+.footer-copy {
+  font-size: 13px;
+  color: #fff;
+}
+
+.icons-footer-container {
+  font-size: 25px;
+  color: #fff;
+}
+
+.sweet-loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%);
 }
 
 @media (max-width: 600px) {

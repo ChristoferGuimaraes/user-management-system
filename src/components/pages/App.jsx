@@ -4,7 +4,7 @@ import "../../assets/css/styles.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { UserContext } from "../../contexts/userContext";
 import { AllUsersContext } from "../../contexts/AllUsersContext";
-
+import { Footer } from "../Footer";
 import Routes from "../../services/routes/routes";
 
 function App() {
@@ -20,6 +20,8 @@ function App() {
           </UserContext.Provider>
         </AllUsersContext.Provider>
       </Router>
+      <Footer />
+
     </>
   );
 }

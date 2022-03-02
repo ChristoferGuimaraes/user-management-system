@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import api from "../../../services/api";
+import { useNavigate } from "react-router-dom";
 import { RadioBtn } from "../RadioBtn";
 import { GoAlert } from "react-icons/go";
 import * as yup from "yup";
@@ -17,17 +18,24 @@ export function AddForm() {
     status: status,
   };
 
+  let navigate = useNavigate();
+  const routeChange = () => {
+    let path = `/`;
+    navigate(path);
+  };
+
   async function postUser() {
     await api
       .post("/", submitedUser)
       .then((res) => {
         res.data;
         setErrors("");
-        window.alert("User added succefully!")
+        window.alert(`${name} added succefully!`);
+        routeChange();
       })
       .catch((error) => {
         if (error.response) {
-          const errorMsg = JSON.parse(error.request.response)
+          const errorMsg = JSON.parse(error.request.response);
           window.alert(errorMsg.message);
         } else if (error.request) {
           window.alert(error.request.response.message);
@@ -67,7 +75,6 @@ export function AddForm() {
       });
 
       postUser();
-      //onBtnClicked();
     } catch (err) {
       if (err instanceof yup.ValidationError) {
         const errorMessages = {};
@@ -79,10 +86,6 @@ export function AddForm() {
       }
     }
   }
-
-  //function onBtnClicked() {
-  //  return (window.location.href = "/");
-  //}
 
   function showErrorMessage(error) {
     if (error !== undefined) {
