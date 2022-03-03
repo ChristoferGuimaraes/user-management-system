@@ -348,6 +348,13 @@ footer ul li a {
   transform: translate(-50%, -100%);
 }
 
+.notfound-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+}
+
 @media (max-width: 600px) {
   .error-message {
     display: inline-block;

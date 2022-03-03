@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { RadioBtn } from "../RadioBtn";
 import { GoAlert } from "react-icons/go";
 import * as yup from "yup";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export function AddForm() {
   const [name, setName] = useState("");
@@ -21,6 +23,7 @@ export function AddForm() {
   let navigate = useNavigate();
   const routeChange = () => {
     let path = `/`;
+
     navigate(path);
   };
 
@@ -30,15 +33,14 @@ export function AddForm() {
       .then((res) => {
         res.data;
         setErrors("");
-        window.alert(`${name} added succefully!`);
         routeChange();
       })
       .catch((error) => {
         if (error.response) {
           const errorMsg = JSON.parse(error.request.response);
-          window.alert(errorMsg.message);
+          notifyWarning(errorMsg.message);
         } else if (error.request) {
-          window.alert(error.request.response.message);
+          notifyError(error.request.response.message);
           console.log(error.request.response);
         } else {
           console.log("Error", error.message);
@@ -97,80 +99,87 @@ export function AddForm() {
     }
   }
 
+  function notifyWarning(msg) {
+    return toast.warn(msg, { position: "top-center", pauseOnHover: false });
+  }
+
+  function notifyError(msg) {
+    return toast.error(msg, { position: "top-center", pauseOnHover: false });
+  }
+
   return (
-    <>
-      <form id="add_user" onSubmit={(e) => submitForm(e)}>
-        <div className="new_user">
-          <div className="form-group">
-            <label htmlFor="name" className="text-light ">
-              Name {showErrorMessage(errors.name)}
-            </label>
-            <input type="hidden" name="id" />
-            <input
-              type="text"
-              name="name"
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Name"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="email" className="text-light ">
-              Email {showErrorMessage(errors.email)}
-            </label>
-            <input
-              type="text"
-              name="email"
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="example@gmail.com"
-            />
-          </div>
-          <div className="form-group" onChange={(e) => onGenderChanged(e)}>
-            <label htmlFor="gender" className="text-light">
-              Gender
-            </label>
-            <RadioBtn
-              id={"radio"}
-              htmlFor={"radio"}
-              name={"gender"}
-              value={"Male"}
-              nameLabel={"Male"}
-            />
-            <RadioBtn
-              id={"radio-2"}
-              htmlFor={"radio-2"}
-              name={"gender"}
-              value={"Female"}
-              nameLabel={"Female"}
-            />{" "}
-            {showErrorMessage(errors.gender)}
-          </div>
-          <div className="form-group" onChange={(e) => onStatusChanged(e)}>
-            <label htmlFor="status" className="text-light">
-              Status
-            </label>
-            <RadioBtn
-              id={"radio-3"}
-              htmlFor={"radio-3"}
-              name={"status"}
-              value={"Active"}
-              nameLabel={"Active"}
-            />
-            <RadioBtn
-              id={"radio-4"}
-              htmlFor={"radio-4"}
-              name={"status"}
-              value={"Inactive"}
-              nameLabel={"Inactive"}
-            />{" "}
-            {showErrorMessage(errors.status)}
-          </div>
-          <div className="form-group">
-            <button type="submit" className="btn text-dark update">
-              Save
-            </button>
-          </div>
+    <form id="add_user" onSubmit={(e) => submitForm(e)}>
+      <div className="new_user">
+        <div className="form-group">
+          <label htmlFor="name" className="text-light ">
+            Name {showErrorMessage(errors.name)}
+          </label>
+          <input type="hidden" name="id" />
+          <input
+            type="text"
+            name="name"
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Name"
+          />
         </div>
-      </form>
-    </>
+        <div className="form-group">
+          <label htmlFor="email" className="text-light ">
+            Email {showErrorMessage(errors.email)}
+          </label>
+          <input
+            type="text"
+            name="email"
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="example@gmail.com"
+          />
+        </div>
+        <div className="form-group" onChange={(e) => onGenderChanged(e)}>
+          <label htmlFor="gender" className="text-light">
+            Gender
+          </label>
+          <RadioBtn
+            id={"radio"}
+            htmlFor={"radio"}
+            name={"gender"}
+            value={"Male"}
+            nameLabel={"Male"}
+          />
+          <RadioBtn
+            id={"radio-2"}
+            htmlFor={"radio-2"}
+            name={"gender"}
+            value={"Female"}
+            nameLabel={"Female"}
+          />{" "}
+          {showErrorMessage(errors.gender)}
+        </div>
+        <div className="form-group" onChange={(e) => onStatusChanged(e)}>
+          <label htmlFor="status" className="text-light">
+            Status
+          </label>
+          <RadioBtn
+            id={"radio-3"}
+            htmlFor={"radio-3"}
+            name={"status"}
+            value={"Active"}
+            nameLabel={"Active"}
+          />
+          <RadioBtn
+            id={"radio-4"}
+            htmlFor={"radio-4"}
+            name={"status"}
+            value={"Inactive"}
+            nameLabel={"Inactive"}
+          />{" "}
+          {showErrorMessage(errors.status)}
+        </div>
+        <div className="form-group">
+          <button type="submit" className="btn text-dark update">
+            Save
+          </button>
+        </div>
+      </div>
+      <ToastContainer />
+    </form>
   );
 }
