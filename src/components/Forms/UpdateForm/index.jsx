@@ -4,6 +4,8 @@ import api from "../../../services/api";
 import { GoAlert } from "react-icons/go";
 import { RadioBtn } from "../RadioBtn";
 import * as yup from "yup";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export function UpdateForm() {
   const { userObj } = useContext(UserContext);
@@ -19,19 +21,20 @@ export function UpdateForm() {
     status: status,
   };
 
+
   async function updateUserValue() {
     await api
       .put(`/${userObj.id}`, submitedUser)
       .then((res) => {
-        window.alert(`${name} was updated succefully!`);
+        notifySuccess(`"${name}" was updated succefully!`);
         setErrors("");
       })
       .catch((error) => {
         if (error.response) {
           const errorMsg = JSON.parse(error.request.response);
-          window.alert(errorMsg.message);
+          notifyWarning(errorMsg.message);
         } else if (error.request) {
-          window.alert(error.request.response.message);
+          notifyError(error.request.response.message);
           console.log(error.request.response);
         } else {
           console.log("Error", error.message);
@@ -88,6 +91,18 @@ export function UpdateForm() {
         </span>
       );
     }
+  }
+
+  function notifySuccess(msg) {
+    return toast.success(msg, { position: "top-center", pauseOnHover: false });
+  }
+
+  function notifyWarning(msg) {
+    return toast.warn(msg, { position: "top-center", pauseOnHover: false });
+  }
+
+  function notifyError(msg) {
+    return toast.error(msg, { position: "top-center", pauseOnHover: false });
   }
 
   return (
@@ -170,6 +185,7 @@ export function UpdateForm() {
           </button>
         </div>
       </div>
+      <ToastContainer />
     </form>
   );
 }

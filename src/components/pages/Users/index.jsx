@@ -4,21 +4,22 @@ import { UserContext } from "../../../contexts/userContext";
 import { AllUsersContext } from "../../../contexts/AllUsersContext";
 import { FaUserEdit, FaUserMinus, FaUserAlt, FaSearch } from "react-icons/fa";
 import api from "../../../services/api";
-import LoadingComponent from "../../Loading/Loading";
+import LoadingComponent from "../../Loading/index";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export function Users() {
   const { users, setUsers } = useContext(AllUsersContext);
   const { setUserObj } = useContext(UserContext);
   const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(false);
-  const [content, setContent] = useState("Loading...");
-  
+
   let userId = 1;
 
   useEffect(() => {
     setTimeout(() => {
       getAllUsers();
-    }, 1000)
-    
+    }, 1000);
   }, []);
 
   async function getAllUsers() {
@@ -37,7 +38,7 @@ export function Users() {
       await api
         .delete(`/${id}`)
         .then((res) => {
-          window.alert(res.data.message);
+          notifySuccess(res.data.message);
         })
         .catch((error) => {
           window.alert(error);
@@ -59,6 +60,10 @@ export function Users() {
       gender: user.gender,
       status: user.status,
     });
+  }
+
+  function notifySuccess(msg) {
+    return toast.success(msg, { position: "top-center", pauseOnHover: false });
   }
 
   return (
@@ -150,6 +155,7 @@ export function Users() {
           )}
         </form>
       </div>
+      <ToastContainer />
     </main>
   );
 }
